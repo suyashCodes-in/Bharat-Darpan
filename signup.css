@@ -1,0 +1,196 @@
+/* --- CSS Reset --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif; /* A modern sans-serif font */
+    background-color: #E7D8C1; /* A neutral background from your secondary colors */
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* --- Container Style --- */
+.login-container {
+    width: 900px;
+    height: 550px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    display: flex;
+    overflow: hidden; /* To ensure the left side fits within the border radius */
+    border: 1px solid #D3D4C0; /* Muted accent border */
+}
+
+/* --- Left Side: Hero Area --- */
+.left-side {
+    width: 50%;
+    background-color: #F3E4C9;
+    color: #0A2947;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.brand i {
+    font-size: 2rem;
+}
+
+.brand h1 {
+    font-size: 1.2rem;
+}
+
+.brand p {
+    font-size: 0.8rem;
+    font-weight: normal;
+}
+
+.illustration {
+    width: 80%;
+    margin-bottom: 20px;
+    border-radius: 47%;
+}
+
+.tagline {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: rgba(10, 41, 71, 0.8);
+}
+
+.destinations-btn {
+    background-color: #0A2947;
+    color: #F3E4C9;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* --- Right Side: Login Form --- */
+.right-side {
+    width: 50%;
+    padding: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-box {
+    width: 100%;
+}
+
+.form-box h2 {
+    color: #0A2947;
+    margin-bottom: 30px;
+    font-size: 2rem;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.8rem;
+    color: #0A2947;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: 1px solid #D3D4C0;
+    background-color: #F9F9F9;
+    color: #0A2947;
+}
+
+.input-group .hide-icon {
+    position: absolute;
+    right: 15px;
+    top: 35px;
+    color: #A0A0A0;
+    cursor: pointer;
+}
+
+.forgot-password {
+    font-size: 0.8rem;
+    color: #0A2947;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 25px;
+    text-align: right;
+}
+
+.sign-up-btn {
+    width: 100%;
+    background-color: #0A2947;
+    color: #F3E4C9;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    margin-bottom: 30px;
+}
+
+.social-login {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.social-login p {
+    font-size: 0.8rem;
+    color: #A0A0A0;
+    margin-bottom: 15px;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.social-icons button {
+    background-color: white;
+    border: 1px solid #D3D4C0;
+    border-radius: 8px;
+    padding: 10px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+.google-btn i { color: #DB4437; }
+.facebook-btn i { color: #4267B2; }
+
+.signup-link {
+    font-size: 0.8rem;
+    text-align: center;
+    color: #0A2947;
+}
+
+.signup-link a {
+    color: #0A2947;
+    font-weight: bold;
+    text-decoration: none;
+}

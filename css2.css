@@ -1,0 +1,263 @@
+/* --- Google Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+
+/* --- CSS Reset & Variables --- */
+:root {
+    --navy: #0A2947;
+    --cream: #F3E4C9;
+    --accent: #D3D4C0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--cream);
+    color: var(--navy);
+}
+
+h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+}
+
+/* --- Navigation Bar --- */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 20px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(10, 41, 71, 0.95); /* Navy with slight transparency */
+    color: var(--cream);
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    font-family: 'Playfair Display', serif;
+}
+
+.nav-links a {
+    color: var(--cream);
+    text-decoration: none;
+    margin: 0 20px;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--accent);
+}
+
+.btn-login {
+    border: 1px solid var(--accent);
+    padding: 8px 24px;
+    color: var(--cream);
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.btn-login:hover {
+    background-color: var(--accent);
+    color: var(--navy);
+}
+
+/* --- Hero Section --- */
+.hero {
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.hero-content {
+    max-width: 800px;
+    color: var(--cream);
+    margin-top: 60px; /* offset for navbar */
+}
+
+.hero h1 {
+    font-size: 4.5rem;
+    margin-bottom: 20px;
+    line-height: 1.1;
+    letter-spacing: 1px;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    font-weight: 300;
+    color: var(--accent);
+}
+
+.btn-primary {
+    background-color: var(--cream);
+    color: var(--navy);
+    padding: 15px 35px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--accent);
+}
+
+/* --- Welcome / Discover Section --- */
+.welcome-section {
+    padding: 100px 20px;
+    text-align: center;
+    background-color: var(--cream);
+}
+
+.welcome-text {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.welcome-text h2 {
+    font-size: 2.5rem;
+    margin-bottom: 25px;
+    color: var(--navy);
+}
+
+.welcome-text p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #333;
+}
+
+/* --- Destinations / Experiences Grid --- */
+.destinations-section {
+    padding: 80px 50px;
+    background-color: var(--navy);
+    color: var(--cream);
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 60px;
+}
+
+.destination-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.dest-card {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 450px;
+    cursor: pointer;
+    border: 2px solid var(--navy);
+}
+
+.dest-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.card-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 30px;
+    background: linear-gradient(transparent, rgba(10, 41, 71, 0.9));
+    color: var(--cream);
+    transform: translateY(20px);
+    transition: transform 0.4s ease;
+}
+
+.card-overlay h3 {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+}
+
+.card-overlay p {
+    font-size: 0.95rem;
+    opacity: 0.8;
+    color: var(--accent);
+}
+
+/* Hover Effects */
+.dest-card:hover img {
+    transform: scale(1.05);
+}
+
+.dest-card:hover .card-overlay {
+    transform: translateY(0);
+}
+
+/* --- Footer --- */
+.footer {
+    background-color: #05182a; /* Slightly darker than navy */
+    color: var(--accent);
+    padding: 60px 50px 20px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(211, 212, 192, 0.2);
+    padding-bottom: 40px;
+    margin-bottom: 20px;
+}
+
+.footer-brand h3 {
+    font-size: 1.5rem;
+    color: var(--cream);
+    margin-bottom: 5px;
+}
+
+.footer-links a {
+    color: var(--accent);
+    text-decoration: none;
+    margin-left: 30px;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: var(--cream);
+}
+
+.footer-bottom {
+    text-align: center;
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    .hero h1 { font-size: 3rem; }
+    .nav-links { display: none; }
+    .footer-content { flex-direction: column; text-align: center; gap: 20px; }
+    .footer-links a { margin: 0 15px; }
+}
