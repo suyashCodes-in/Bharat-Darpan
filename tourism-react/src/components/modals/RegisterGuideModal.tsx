@@ -1,5 +1,9 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import type { GuideFormData } from '../../types'
+import { useAuth } from '../../context/AuthContext'
+import { registerGuide } from '../../lib/guides'
+import { ApiError } from '../../lib/api'
 
 const EMPTY: GuideFormData = {
   name: '', email: '', phone: '', aadhar: '',
@@ -16,27 +20,77 @@ const EXPERTISE_OPTIONS = [
 ]
 
 export default function RegisterGuideModal() {
-  const [form, setForm] = useState<GuideFormData>(EMPTY)
+  const { user } = useAuth()
+  const [form, setForm]       = useState<GuideFormData>(EMPTY)
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading]     = useState(false)
+  const [apiError, setApiError]   = useState('')
 
-  const set = (field: keyof GuideFormData) =>
-    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
-      setForm(prev => ({ ...prev, [field]: e.target.value }))
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log('Guide registration:', form)
-    setSubmitted(true)
+  // ── Auth guard ──────────────────────────────────────────────────────────
+  if (!user) {
+    return (
+      <div className="text-center py-8">
+        <i className="fas fa-lock text-4xl text-navy mb-4 block opacity-40" />
+        <h2 className="font-heading text-2xl text-navy mb-2">Login Required</h2>
+        <p className="text-gray-500 text-sm mb-6">
+          You need to be logged in to register as a guide.
+        </p>
+        <Link
+          to="/login"
+          className="bg-navy text-cream font-bold px-8 py-3 rounded hover:opacity-90 transition-opacity"
+        >
+          Go to Login
+        </Link>
+      </div>
+    )
   }
 
+  // ── Already a guide ─────────────────────────────────────────────────────
+  if (user.role === 'guide') {
+    return (
+      <div className="text-center py-8">
+        <i className="fas fa-id-badge text-5xl text-navy mb-4 block" />
+        <h2 className="font-heading text-2xl text-navy mb-2">Already Registered!</h2>
+        <p className="text-gray-500 text-sm">
+          You're already a verified guide on Bharat Darpan.
+        </p>
+      </div>
+    )
+  }
+
+  // ── Success screen ──────────────────────────────────────────────────────
   if (submitted) {
     return (
       <div className="text-center py-8">
         <i className="fas fa-check-circle text-5xl text-green-500 mb-4 block" />
         <h2 className="font-heading text-2xl text-navy mb-2">Registration Submitted!</h2>
-        <p className="text-gray-600">We'll review your application and get back to you shortly.</p>
+        <p className="text-gray-600">
+          Your Aadhaar has been verified. You are now a registered guide!
+        </p>
       </div>
     )
+  }
+
+  const set = (field: keyof GuideFormData) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
+      setForm(prev => ({ ...prev, [field]: e.target.value }))
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setApiError('')
+    setLoading(true)
+    try {
+      await registerGuide(form)
+      setSubmitted(true)
+    } catch (err) {
+      if (err instanceof ApiError) {
+        setApiError(err.message)
+      } else {
+        setApiError('Something went wrong. Please try again.')
+      }
+    } finally {
+      setLoading(false)
+    }
   }
 
   const inputCls = "w-full px-4 py-3 border border-accent rounded-md bg-white text-navy text-sm outline-none focus:border-navy focus:ring-2 focus:ring-navy/10"
@@ -50,13 +104,13 @@ export default function RegisterGuideModal() {
       </p>
       <form id="guide-registration-form" onSubmit={handleSubmit} className="space-y-4">
         {[
-          { id: 'guide-name',      field: 'name',       label: 'Full Name',            type: 'text',  placeholder: 'Enter your full name' },
-          { id: 'guide-email',     field: 'email',      label: 'Email Address',        type: 'email', placeholder: 'example@gmail.com' },
-          { id: 'guide-phone',     field: 'phone',      label: 'Phone Number',         type: 'tel',   placeholder: 'Enter your phone number' },
-          { id: 'guide-aadhar',    field: 'aadhar',     label: 'Aadhar ID',            type: 'tel',   placeholder: 'Enter your Aadhar Id' },
-          { id: 'guide-location',  field: 'location',   label: 'City / Location',      type: 'text',  placeholder: 'e.g. Agra' },
-          { id: 'guide-languages', field: 'languages',  label: 'Languages You Speak',  type: 'text',  placeholder: 'Hindi, English, Punjabi...' },
-          { id: 'guide-exp',       field: 'experience', label: 'Years of Experience',  type: 'number',placeholder: 'e.g. 5' },
+          { id: 'guide-name',      field: 'name',       label: 'Full Name',            type: 'text',   placeholder: 'Enter your full name' },
+          { id: 'guide-email',     field: 'email',      label: 'Email Address',        type: 'email',  placeholder: 'example@gmail.com' },
+          { id: 'guide-phone',     field: 'phone',      label: 'Phone Number',         type: 'tel',    placeholder: 'Enter your phone number' },
+          { id: 'guide-aadhar',    field: 'aadhar',     label: 'Aadhar Number (12 digits)', type: 'text', placeholder: 'Enter your 12-digit Aadhaar number' },
+          { id: 'guide-location',  field: 'location',   label: 'City / Location',      type: 'text',   placeholder: 'e.g. Agra' },
+          { id: 'guide-languages', field: 'languages',  label: 'Languages You Speak (comma-separated)', type: 'text', placeholder: 'Hindi, English, Punjabi…' },
+          { id: 'guide-exp',       field: 'experience', label: 'Years of Experience',  type: 'number', placeholder: 'e.g. 5' },
         ].map(f => (
           <div key={f.id}>
             <label htmlFor={f.id} className={labelCls}>{f.label}</label>
@@ -69,6 +123,9 @@ export default function RegisterGuideModal() {
               className={inputCls}
               required
               min={f.type === 'number' ? 0 : undefined}
+              pattern={f.field === 'aadhar' ? '\\d{12}' : undefined}
+              title={f.field === 'aadhar' ? 'Must be exactly 12 digits' : undefined}
+              disabled={loading}
             />
           </div>
         ))}
@@ -81,6 +138,7 @@ export default function RegisterGuideModal() {
             onChange={set('expertise')}
             className={inputCls}
             required
+            disabled={loading}
           >
             <option value="" disabled>Select your expertise</option>
             {EXPERTISE_OPTIONS.map(o => (
@@ -94,19 +152,33 @@ export default function RegisterGuideModal() {
           <textarea
             id="guide-about"
             rows={4}
-            placeholder="Tell travelers about yourself and your guiding experience..."
+            placeholder="Tell travelers about yourself and your guiding experience…"
             value={form.about}
             onChange={set('about')}
             className={`${inputCls} resize-y`}
             required
+            disabled={loading}
           />
         </div>
 
+        {/* API error */}
+        {apiError && (
+          <p id="guide-register-error" className="text-red-500 text-sm bg-red-50 border border-red-200 rounded p-2 text-center">
+            <i className="fas fa-exclamation-circle mr-1" />{apiError}
+          </p>
+        )}
+
         <button
           type="submit"
-          className="w-full bg-accent text-navy font-bold py-3 rounded hover:bg-cream transition-colors mt-2"
+          disabled={loading}
+          className="w-full bg-accent text-navy font-bold py-3 rounded hover:bg-cream transition-colors mt-2 disabled:opacity-60 flex items-center justify-center gap-2"
         >
-          Register as Guide
+          {loading ? (
+            <>
+              <i className="fas fa-spinner fa-spin" />
+              Verifying Aadhaar…
+            </>
+          ) : 'Register as Guide'}
         </button>
       </form>
     </>

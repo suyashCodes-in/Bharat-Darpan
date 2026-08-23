@@ -1,16 +1,34 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../../context/AuthContext'
+import { ApiError } from '../../lib/api'
 
 export default function LoginForm() {
-  const [email, setEmail]           = useState('')
-  const [password, setPassword]     = useState('')
-  const [showPassword, setShowPw]   = useState(false)
-  const [message, setMessage]       = useState('')
+  const { login } = useAuth()
+  const navigate = useNavigate()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [email, setEmail]         = useState('')
+  const [password, setPassword]   = useState('')
+  const [showPassword, setShowPw] = useState(false)
+  const [error, setError]         = useState('')
+  const [loading, setLoading]     = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('Login attempt:', { email, password })
-    setMessage('Login submitted! (Backend integration pending.)')
+    setError('')
+    setLoading(true)
+    try {
+      await login(email, password)
+      navigate('/')
+    } catch (err) {
+      if (err instanceof ApiError) {
+        setError(err.message)
+      } else {
+        setError('Something went wrong. Please try again.')
+      }
+    } finally {
+      setLoading(false)
+    }
   }
 
   const inputCls = "w-full px-4 py-2.5 rounded border border-accent bg-[#F9F9F9] text-navy text-sm outline-none focus:border-navy focus:ring-2 focus:ring-navy/10"
@@ -23,15 +41,16 @@ export default function LoginForm() {
       <form id="login-form" onSubmit={handleSubmit} className="space-y-4">
         {/* Email */}
         <div>
-          <label htmlFor="login-email" className={labelCls}>Email or Username</label>
+          <label htmlFor="login-email" className={labelCls}>Email</label>
           <input
             id="login-email"
-            type="text"
+            type="email"
             placeholder="user@example.com"
             value={email}
             onChange={e => setEmail(e.target.value)}
             className={inputCls}
             required
+            disabled={loading}
           />
         </div>
 
@@ -46,6 +65,7 @@ export default function LoginForm() {
             onChange={e => setPassword(e.target.value)}
             className={`${inputCls} pr-10`}
             required
+            disabled={loading}
           />
           <button
             type="button"
@@ -62,18 +82,27 @@ export default function LoginForm() {
           Forgot your password?
         </a>
 
+        {/* Error message */}
+        {error && (
+          <p id="login-error" className="text-red-500 text-sm text-center bg-red-50 border border-red-200 rounded p-2">
+            <i className="fas fa-exclamation-circle mr-1" />{error}
+          </p>
+        )}
+
         <button
           id="login-submit-btn"
           type="submit"
-          className="w-full bg-navy text-cream font-bold py-3 rounded hover:opacity-90 transition-opacity"
+          disabled={loading}
+          className="w-full bg-navy text-cream font-bold py-3 rounded hover:opacity-90 transition-opacity disabled:opacity-60 flex items-center justify-center gap-2"
         >
-          SIGN IN
+          {loading ? (
+            <>
+              <i className="fas fa-spinner fa-spin" />
+              Signing in…
+            </>
+          ) : 'SIGN IN'}
         </button>
       </form>
-
-      {message && (
-        <p className="text-green-600 text-sm text-center mt-3">{message}</p>
-      )}
 
       {/* Social SSO */}
       <div className="text-center mt-6 mb-6">

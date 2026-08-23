@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 
 interface NavbarProps {
   onReset: () => void
 }
 
 export default function Navbar({ onReset }: NavbarProps) {
+  const { user, logout } = useAuth()
+  const navigate = useNavigate()
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -27,6 +30,82 @@ export default function Navbar({ onReset }: NavbarProps) {
   }, [menuOpen])
 
   const handleReset = () => { setMenuOpen(false); onReset() }
+
+  const handleLogout = () => {
+    logout()
+    setMenuOpen(false)
+    navigate('/')
+  }
+
+  // ── Shared auth UI pieces ─────────────────────────────────────────────────
+  const desktopAuth = user ? (
+    <div className="hidden md:flex items-center gap-3">
+      <span className="text-cream text-sm opacity-80">
+        <i className="fas fa-user-circle mr-1.5" />
+        {user.name}
+        {user.role === 'guide' && (
+          <span className="ml-1.5 text-xs bg-accent text-navy px-2 py-0.5 rounded-full font-semibold">
+            Guide
+          </span>
+        )}
+      </span>
+      <button
+        id="navbar-logout-btn"
+        onClick={handleLogout}
+        className="border border-accent px-5 py-2 text-cream rounded hover:bg-accent hover:text-navy transition-colors duration-200 text-sm"
+      >
+        Logout
+      </button>
+    </div>
+  ) : (
+    <div className="hidden md:flex items-center gap-2">
+      <Link
+        id="navbar-login-link"
+        to="/login"
+        className="border border-accent px-5 py-2 text-cream no-underline rounded hover:bg-accent hover:text-navy transition-colors duration-200 text-sm"
+      >
+        Login
+      </Link>
+      <Link
+        id="navbar-signup-link"
+        to="/signup"
+        className="bg-accent text-navy font-bold px-5 py-2 no-underline rounded hover:bg-cream transition-colors duration-200 text-sm"
+      >
+        Sign Up
+      </Link>
+    </div>
+  )
+
+  const mobileAuth = user ? (
+    <div className="flex flex-col gap-2">
+      <p className="text-center text-cream text-sm opacity-80">
+        <i className="fas fa-user-circle mr-1.5" />{user.name}
+      </p>
+      <button
+        onClick={handleLogout}
+        className="block text-center border border-accent px-6 py-2.5 text-cream rounded"
+      >
+        Logout
+      </button>
+    </div>
+  ) : (
+    <div className="flex flex-col gap-2">
+      <Link
+        to="/login"
+        onClick={() => setMenuOpen(false)}
+        className="block text-center border border-accent px-6 py-2.5 text-cream no-underline rounded"
+      >
+        Login
+      </Link>
+      <Link
+        to="/signup"
+        onClick={() => setMenuOpen(false)}
+        className="block text-center bg-accent text-navy font-bold px-6 py-2.5 no-underline rounded"
+      >
+        Sign Up
+      </Link>
+    </div>
+  )
 
   return (
     <header
@@ -56,13 +135,7 @@ export default function Navbar({ onReset }: NavbarProps) {
 
         {/* Desktop nav */}
         <nav className="flex items-center gap-4">
-          <Link
-            id="navbar-login-link"
-            to="/login"
-            className="hidden md:inline-block border border-accent px-6 py-2 text-cream no-underline rounded hover:bg-accent hover:text-navy transition-colors duration-200"
-          >
-            Login
-          </Link>
+          {desktopAuth}
 
           {/* Hamburger (visible < 768px) */}
           <button
@@ -70,7 +143,7 @@ export default function Navbar({ onReset }: NavbarProps) {
             onClick={() => setMenuOpen(v => !v)}
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={menuOpen}
-            className="hamburger-btn flex-col justify-center items-center gap-[5px] w-10 h-10 bg-transparent border-none cursor-pointer"
+            className="hamburger-btn flex-col justify-center items-center gap-[5px] w-10 h-10 bg-transparent border-none cursor-pointer md:hidden"
           >
             <span
               className="block w-6 h-0.5 bg-cream rounded-sm transition-all duration-300"
@@ -90,20 +163,14 @@ export default function Navbar({ onReset }: NavbarProps) {
 
       {/* Mobile drawer */}
       <div
-        className="overflow-hidden transition-[max-height] duration-300 ease-in-out bg-navy"
+        className="overflow-hidden transition-[max-height] duration-300 ease-in-out bg-navy md:hidden"
         style={{
-          maxHeight: menuOpen ? '120px' : '0',
+          maxHeight: menuOpen ? '160px' : '0',
           borderTop: menuOpen ? '1px solid rgba(211,212,192,0.2)' : 'none',
         }}
       >
         <div className="px-6 pt-3 pb-5">
-          <Link
-            to="/login"
-            onClick={() => setMenuOpen(false)}
-            className="block text-center border border-accent px-6 py-2.5 text-cream no-underline rounded"
-          >
-            Login
-          </Link>
+          {mobileAuth}
         </div>
       </div>
     </header>
