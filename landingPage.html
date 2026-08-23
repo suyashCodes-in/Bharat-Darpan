@@ -1,107 +1,269 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Incredible India - Smart Tourism</title>
-    <link rel="stylesheet" href="landing.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
+    <link rel="stylesheet" href="landing.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
 
-<body>
-
+  <body>
     <!-- Navigation -->
     <header class="navbar">
-
-        <div class="logo" onclick="resetApp()" style="font-style: italic;">
-            experience <br> incredible india
-        </div>
-        <div class="nav-actions">
-            <a href="login.html" class="btn-login">Login</a>
-        </div>
-
+      <div class="logo" onclick="resetApp()" style="font-style: italic">
+        experience <br />
+        incredible india
+      </div>
+      <div class="nav-actions">
+        <a href="login.html" class="btn-login">Login</a>
+      </div>
     </header>
 
     <!-- STEP 1: Hero & City Selection -->
     <section id="step-1-city" class="hero step-section active">
-        <div class="hero-content">
-            <h1>Where do you want to go?</h1>
-            <p>Select a city to discover its iconic attractions and exclusive services.</p>
+      <div class="hero-content">
+        <h1>Where do you want to go?</h1>
+        <p>
+          Select a city to discover its iconic attractions and exclusive
+          services.
+        </p>
 
-            <div class="search-box">
-                <select id="city-select">
-                    <option value="" disabled selected>Select a City...</option>
-                    <option value="delhi">Delhi</option>
-                    <option value="agra">Agra</option>
-                    <option value="jaipur">Jaipur</option>
-                    <option value="kashmir">Kashmir</option>
-                    <option value="ladakh">Ladakh</option>
-                    <option value="shimla">Shimla</option>
-                    <option value="dehradun">Dehradun</option>
-                    <option value="manali">Manali</option>
-                    <option value="varanasi">Varanasi</option>
-                    <option value="chennai">Chennai</option>
-                    <option value="banglore">Banglore</option>
-                </select>
-                <button onclick="selectCity()" class="btn-primary">Explore City</button>
-            </div>
+        <div class="search-box">
+          <select id="city-select">
+            <option value="" disabled selected>Select a City...</option>
+            <option value="delhi">Delhi</option>
+            <option value="agra">Agra</option>
+            <option value="jaipur">Jaipur</option>
+            <option value="kashmir">Kashmir</option>
+            <option value="ladakh">Ladakh</option>
+            <option value="shimla">Shimla</option>
+            <option value="dehradun">Dehradun</option>
+            <option value="manali">Manali</option>
+            <option value="varanasi">Varanasi</option>
+            <option value="chennai">Chennai</option>
+            <option value="banglore">Banglore</option>
+          </select>
+          <button onclick="selectCity()" class="btn-primary">
+            Explore City
+          </button>
         </div>
+      </div>
     </section>
-
 
     <!-- Welcome Section -->
     <section id="discover" class="welcome-section">
-        <div class="welcome-text">
-            <h2>Welcome to the Heart of Heritage</h2>
-            <p>India is not just a destination; it's a profound experience. Immerse yourself in a tapestry of rich
-                cultures, vibrant traditions, and breathtaking landscapes that will stay with you forever.</p>
-        </div>
+      <div class="welcome-text">
+        <h2>Welcome to the Heart of Heritage</h2>
+        <p>
+          India is not just a destination; it's a profound experience. Immerse
+          yourself in a tapestry of rich cultures, vibrant traditions, and
+          breathtaking landscapes that will stay with you forever.
+        </p>
+      </div>
     </section>
 
     <!-- STEP 2: Attractions Selection -->
     <section id="step-2-attractions" class="destinations-section step-section">
-        <button class="btn-back" onclick="goBack('step-1-city')"><i class="fas fa-arrow-left"></i> Back to
-            Cities</button>
-        <h2 class="section-title" id="city-title">Attractions in [City]</h2>
-        <div class="destination-grid" id="attractions-grid">
-            <!-- Populated dynamically by JavaScript -->
-        </div>
+      <button class="btn-back" onclick="goBack('step-1-city')">
+        <i class="fas fa-arrow-left"></i> Back to Cities
+      </button>
+      <h2 class="section-title" id="city-title">Attractions in [City]</h2>
+      <div class="destination-grid" id="attractions-grid">
+        <!-- Populated dynamically by JavaScript -->
+      </div>
     </section>
 
     <!-- STEP 3: Services Dashboard -->
     <section id="step-3-services" class="services-section step-section">
-        <button class="btn-back" onclick="goBack('step-2-attractions')"><i class="fas fa-arrow-left"></i> Back to
-            Attractions</button>
-        <h2 class="section-title" id="attraction-title">Explore [Attraction]</h2>
-        <p class="section-subtitle">Choose a service to enhance your experience.</p>
+      <button class="btn-back" onclick="goBack('step-2-attractions')">
+        <i class="fas fa-arrow-left"></i> Back to Attractions
+      </button>
+      <h2 class="section-title" id="attraction-title">Explore [Attraction]</h2>
+      <p class="section-subtitle">
+        Choose a service to enhance your experience.
+      </p>
 
-        <div class="services-grid">
-            <!-- Service 1: Guide -->
-            <div class="service-card" onclick="openModal('modal-guide')">
-                <i class="fas fa-user-tie service-icon"></i>
-                <h3>Book a Guide</h3>
-                <p>Hire certified, authentic local guides rated by tourists.</p>
-            </div>
-            <!-- Service 2: Hotel -->
-            <div class="service-card" onclick="openModal('modal-hotel')">
-                <i class="fas fa-hotel service-icon"></i>
-                <h3>Book a Hotel</h3>
-                <p>Stay near the attraction. Top-rated on Google Maps.</p>
-            </div>
-            <!-- Service 3: Local Zayaka -->
-            <div class="service-card" onclick="openModal('modal-food')">
-                <i class="fas fa-utensils service-icon"></i>
-                <h3>Local Zayaka</h3>
-                <p>Dine at famous local corners and get a flat 25% off.</p>
-            </div>
-            <!-- Service 4: Packages -->
-            <div class="service-card" onclick="openModal('modal-packages')">
-                <i class="fas fa-suitcase-rolling service-icon"></i>
-                <h3>Tourism Packages</h3>
-                <p>All-inclusive: Stay, Food, and Guide sorted.</p>
-            </div>
+      <div class="services-grid">
+        <!-- Service 1: Guide -->
+        <div class="service-card" onclick="openModal('modal-guide')">
+          <i class="fas fa-user-tie service-icon"></i>
+          <h3>Book a Guide</h3>
+          <p>Hire certified, authentic local guides rated by tourists.</p>
         </div>
+
+        <!-- Register as a Guide Modal -->
+        <div id="modal-register-guide" class="modal">
+          <span class="close-modal" onclick="closeModals()">&times;</span>
+
+          <h2>Register as a Guide</h2>
+
+          <p class="form-subtitle">
+            Join Bharat Darpan and help travelers discover India through
+            authentic local experiences.
+          </p>
+
+          <form id="guide-registration-form">
+            <!-- Full Name -->
+            <div class="guide-input-group">
+              <label for="guide-name">Full Name</label>
+              <input
+                type="text"
+                id="guide-name"
+                name="guide-name"
+                placeholder="Enter your full name"
+                required
+              />
+            </div>
+
+            <!-- Email -->
+            <div class="guide-input-group">
+              <label for="guide-email">Email Address</label>
+              <input
+                type="email"
+                id="guide-email"
+                name="guide-email"
+                placeholder="example@gmail.com"
+                required
+              />
+            </div>
+
+            <!-- Phone -->
+            <div class="guide-input-group">
+              <label for="guide-phone">Phone Number</label>
+              <input
+                type="tel"
+                id="guide-phone"
+                name="guide-phone"
+                placeholder="Enter your phone number"
+                required
+              />
+            </div>
+            <!--Addhar-->
+            <div class="guide-input-group">
+              <label for="guide-aadhar">Aadhar ID</label>
+              <input
+                type="tel"
+                id="guide-aadhar"
+                name="guide-aadhar"
+                placeholder="Enter your Aadhar Id"
+                required
+              />
+            </div>
+            <!-- Location -->
+            <div class="guide-input-group">
+              <label for="guide-location">City / Location</label>
+              <input
+                type="text"
+                id="guide-location"
+                name="guide-location"
+                placeholder="e.g. Agra"
+                required
+              />
+            </div>
+
+            <!-- Languages -->
+            <div class="guide-input-group">
+              <label for="guide-languages">Languages You Speak</label>
+              <input
+                type="text"
+                id="guide-languages"
+                name="guide-languages"
+                placeholder="Hindi, English, Punjabi..."
+                required
+              />
+            </div>
+
+            <!-- Experience -->
+            <div class="guide-input-group">
+              <label for="guide-experience">Years of Experience</label>
+              <input
+                type="number"
+                id="guide-experience"
+                name="guide-experience"
+                min="0"
+                placeholder="e.g. 5"
+                required
+              />
+            </div>
+
+            <!-- Expertise -->
+            <div class="guide-input-group">
+              <label for="guide-expertise">Area of Expertise</label>
+
+              <select id="guide-expertise" name="guide-expertise" required>
+                <option value="" disabled selected>
+                  Select your expertise
+                </option>
+                <option value="history">History & Heritage</option>
+                <option value="culture">Culture & Traditions</option>
+                <option value="food">Food & Local Cuisine</option>
+                <option value="adventure">Adventure & Nature</option>
+                <option value="spiritual">Spiritual & Religious</option>
+                <option value="photography">Photography Tours</option>
+              </select>
+            </div>
+
+            <!-- About -->
+            <div class="guide-input-group">
+              <label for="guide-about">About Yourself</label>
+
+              <textarea
+                id="guide-about"
+                name="guide-about"
+                rows="4"
+                placeholder="Tell travelers about yourself and your guiding experience..."
+                required
+              ></textarea>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="btn-primary guide-submit-btn">
+              Register as Guide
+            </button>
+          </form>
+        </div>
+        <!-- Service 2: Hotel -->
+        <div class="service-card" onclick="openModal('modal-hotel')">
+          <i class="fas fa-hotel service-icon"></i>
+          <h3>Book a Hotel</h3>
+          <p>Stay near the attraction. Top-rated on Google Maps.</p>
+        </div>
+        <!-- Service 3: Local Zayaka -->
+        <div class="service-card" onclick="openModal('modal-food')">
+          <i class="fas fa-utensils service-icon"></i>
+          <h3>Local Zayaka</h3>
+          <p>Dine at famous local corners and get a flat 25% off.</p>
+        </div>
+        <!-- Service 4: Packages -->
+        <div class="service-card" onclick="openModal('modal-packages')">
+          <i class="fas fa-suitcase-rolling service-icon"></i>
+          <h3>Tourism Packages</h3>
+          <p>All-inclusive: Stay, Food, and Guide sorted.</p>
+        </div>
+        <!-- Register as a Guide -->
+        <div class="service-card" onclick="openModal('modal-register-guide')">
+          <i class="fas fa-user-tie service-icon"></i>
+          <h3>Register as a Guide</h3>
+          <p>
+            Become a local guide and help travelers discover authentic
+            experiences.
+          </p>
+        </div>
+
+        <!-- About the Place -->
+        <div class="service-card" onclick="openModal('modal-place')">
+          <i class="fas fa-map-marked-alt service-icon"></i>
+          <h3>About the Place</h3>
+          <p>
+            Discover the history, culture, attractions, and hidden gems of this
+            place.
+          </p>
+        </div>
+      </div>
     </section>
 
     <!-- MODALS FOR SERVICES -->
@@ -109,147 +271,160 @@
 
     <!-- Guide Modal -->
     <div id="modal-guide" class="modal">
-        <span class="close-modal" onclick="closeModals()">&times;</span>
-        <h2>Verified Local Guides</h2>
-        <div class="list-container">
-            <div class="list-item">
-                <div>
-                    <h4>Ramesh Kumar</h4>
-                    <p class="rating">★★★★★ (4.9)</p>
-                </div>
-                <button class="btn-primary">Pay & Book</button>
-            </div>
-            <div class="list-item">
-                <div>
-                    <h4>Anita Sharma</h4>
-                    <p class="rating">★★★★☆ (4.5)</p>
-                </div>
-                <button class="btn-primary">Pay & Book</button>
-            </div>
+      <span class="close-modal" onclick="closeModals()">&times;</span>
+      <h2>Verified Local Guides</h2>
+      <div class="list-container">
+        <div class="list-item">
+          <div>
+            <h4>Ramesh Kumar</h4>
+            <p class="rating">★★★★★ (4.9)</p>
+          </div>
+          <button class="btn-primary">Pay & Book</button>
         </div>
+        <div class="list-item">
+          <div>
+            <h4>Anita Sharma</h4>
+            <p class="rating">★★★★☆ (4.5)</p>
+          </div>
+          <button class="btn-primary">Pay & Book</button>
+        </div>
+      </div>
     </div>
 
     <!-- Hotel Modal -->
     <div id="modal-hotel" class="modal">
-        <span class="close-modal" onclick="closeModals()">&times;</span>
-        <h2>Nearby Hotels</h2>
-        <div class="list-container">
-            <div class="list-item">
-                <div>
-                    <h4>The Heritage Stay</h4>
-                    <p class="rating">Google Maps: ★★★★★</p>
-                </div>
-                <button class="btn-primary">Pay & Book</button>
-            </div>
-            <div class="list-item">
-                <div>
-                    <h4>Comfort Inn</h4>
-                    <p class="rating">Google Maps: ★★★★☆</p>
-                </div>
-                <button class="btn-primary">Pay & Book</button>
-            </div>
+      <span class="close-modal" onclick="closeModals()">&times;</span>
+      <h2>Nearby Hotels</h2>
+      <div class="list-container">
+        <div class="list-item">
+          <div>
+            <h4>The Heritage Stay</h4>
+            <p class="rating">Google Maps: ★★★★★</p>
+          </div>
+          <button class="btn-primary">Pay & Book</button>
         </div>
+        <div class="list-item">
+          <div>
+            <h4>Comfort Inn</h4>
+            <p class="rating">Google Maps: ★★★★☆</p>
+          </div>
+          <button class="btn-primary">Pay & Book</button>
+        </div>
+      </div>
     </div>
 
     <!-- Local Zayaka Modal -->
     <div id="modal-food" class="modal text-center">
-        <span class="close-modal" onclick="closeModals()">&times;</span>
-        <h2>Local Zayaka</h2>
-        <p>Show this code at our listed local food corners to get <strong>Flat 25% OFF</strong> on your bill!</p>
-        <button class="btn-primary" onclick="generateCode()" style="margin: 20px 0;">Generate My Coupon</button>
-        <div id="coupon-display" class="coupon-code" style="display: none;"></div>
+      <span class="close-modal" onclick="closeModals()">&times;</span>
+      <h2>Local Zayaka</h2>
+      <p>
+        Show this code at our listed local food corners to get
+        <strong>Flat 25% OFF</strong> on your bill!
+      </p>
+      <button
+        class="btn-primary"
+        onclick="generateCode()"
+        style="margin: 20px 0"
+      >
+        Generate My Coupon
+      </button>
+      <div id="coupon-display" class="coupon-code" style="display: none"></div>
     </div>
 
     <!-- Packages Modal -->
     <div id="modal-packages" class="modal">
-        <span class="close-modal" onclick="closeModals()">&times;</span>
-        <h2>All-Inclusive Packages</h2>
-        <div class="packages-grid">
-            <div class="package-card silver" >
-                <div class="marg"><h4>Silver</h4></div>
-                <p>3-Star Stay, Standard Guide, Local Zayaka Access</p>
-                <button class="btn-primary">Buy Now</button>
-            </div>
-            <div class="package-card gold">
-                <div class="marg"><h4>Gold</h4></div>
-                <p>4-Star Stay, Premium Guide, 2 Meals/Day</p>
-                <button class="btn-primary">Buy Now</button>
-            </div>
-            <div class="package-card platinum">
-                <div class="marg"><h4>Platinum</h4></div>
-                <p>5-Star Stay, Elite Guide, All Meals & VIP Entry</p>
-                <button class="btn-primary">Buy Now</button>
-            </div>
+      <span class="close-modal" onclick="closeModals()">&times;</span>
+      <h2>All-Inclusive Packages</h2>
+      <div class="packages-grid">
+        <div class="package-card silver">
+          <div class="marg"><h4>Silver</h4></div>
+          <p>3-Star Stay, Standard Guide, Local Zayaka Access</p>
+          <button class="btn-primary">Buy Now</button>
         </div>
+        <div class="package-card gold">
+          <div class="marg"><h4>Gold</h4></div>
+          <p>4-Star Stay, Premium Guide, 2 Meals/Day</p>
+          <button class="btn-primary">Buy Now</button>
+        </div>
+        <div class="package-card platinum">
+          <div class="marg"><h4>Platinum</h4></div>
+          <p>5-Star Stay, Elite Guide, All Meals & VIP Entry</p>
+          <button class="btn-primary">Buy Now</button>
+        </div>
+      </div>
     </div>
 
     <!-- Elaborate Footer -->
     <footer class="site-footer">
-        <!-- Top Section: Logo & Back to Top -->
-        <div class="footer-top">
-            <div class="footer-logo">
-            </div>
-            <a href="#" class="btn-back-to-top">BACK TO TOP &uarr;</a>
+      <!-- Top Section: Logo & Back to Top -->
+      <div class="footer-top">
+        <div class="footer-logo"></div>
+        <a href="#" class="btn-back-to-top">BACK TO TOP &uarr;</a>
+      </div>
+
+      <!-- Middle Section: Content Cards -->
+      <div class="footer-middle">
+        <!-- Box 1: Newsletter (Matches left box in reference) -->
+        <div class="footer-box newsletter-box">
+          <h3>Subscribe to the Newsletter</h3>
+          <p>
+            Sign up for exciting travel news, learn more about our upcoming
+            packages and get great travel ideas.
+          </p>
+          <button class="btn-subscribe">
+            SUBSCRIBE NEWSLETTER <i class="fas fa-chevron-right"></i>
+          </button>
         </div>
 
-        <!-- Middle Section: Content Cards -->
-        <div class="footer-middle">
-            <!-- Box 1: Newsletter (Matches left box in reference) -->
-            <div class="footer-box newsletter-box">
-                <h3>Subscribe to the Newsletter</h3>
-                <p>Sign up for exciting travel news, learn more about our upcoming packages and get great travel ideas.</p>
-                <button class="btn-subscribe">SUBSCRIBE NEWSLETTER <i class="fas fa-chevron-right"></i></button>
-            </div>
-
-            <!-- Box 2: Quick Links (Matches middle box in reference) -->
-            <div class="footer-box links-box">
-                <a href="#">ABOUT US</a>
-                <a href="#">CONTACT US</a>
-                <a href="#step-1-city">WHERE TO GO</a>
-                
-            </div>
-
-            <!-- Box 3: Socials & App (Matches right stacked boxes in reference) -->
-            <div class="footer-right-column">
-                <!-- Socials -->
-                <div class="footer-box social-box">
-                    <h3>Follow us</h3>
-                    <div class="social-icons-row">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-whatsapp"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-                
-                <!-- App Download -->
-                <div class="footer-box app-box">
-                    <div class="app-text">
-                        <h3>Download<br>Our App</h3>
-                    </div>
-                    <div class="qr-placeholder">
-                        <i class="fas fa-qrcode"></i>
-                    </div>
-                </div>
-            </div>
+        <!-- Box 2: Quick Links (Matches middle box in reference) -->
+        <div class="footer-box links-box">
+          <a href="#">ABOUT US</a>
+          <a href="#">CONTACT US</a>
+          <a href="#step-1-city">WHERE TO GO</a>
         </div>
 
-        <!-- Bottom Section: Legal & Copyright -->
-        <div class="footer-bottom">
-            <div class="legal-links">
-                <a href="#">FAQs</a>
-                <a href="#">Terms and conditions</a>
-                <a href="#">Privacy policy</a>
-                <a href="#">Cookie policy</a>
+        <!-- Box 3: Socials & App (Matches right stacked boxes in reference) -->
+        <div class="footer-right-column">
+          <!-- Socials -->
+          <div class="footer-box social-box">
+            <h3>Follow us</h3>
+            <div class="social-icons-row">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-whatsapp"></i></a>
+              <a href="#"><i class="fab fa-youtube"></i></a>
             </div>
-            <div class="copyright-text">
-                <p>Copyright &copy; 2026 Incredible India Tourism. All Rights Reserved.</p>
+          </div>
+
+          <!-- App Download -->
+          <div class="footer-box app-box">
+            <div class="app-text">
+              <h3>Download<br />Our App</h3>
             </div>
+            <div class="qr-placeholder">
+              <i class="fas fa-qrcode"></i>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <!-- Bottom Section: Legal & Copyright -->
+      <div class="footer-bottom">
+        <div class="legal-links">
+          <a href="#">FAQs</a>
+          <a href="#">Terms and conditions</a>
+          <a href="#">Privacy policy</a>
+          <a href="#">Cookie policy</a>
+        </div>
+        <div class="copyright-text">
+          <p>
+            Copyright &copy; 2026 Incredible India Tourism. All Rights Reserved.
+          </p>
+        </div>
+      </div>
     </footer>
 
     <script src="jsLand.js"></script>
-</body>
-
+  </body>
 </html>

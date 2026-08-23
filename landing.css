@@ -149,6 +149,9 @@ section#step-2-attractions {
 }
 
 /* Services */
+.services-grid{
+    margin-bottom: 30px;;
+}
 .service-card {
     background: white; padding: 40px 20px; text-align: center; border-radius: 10px;
     box-shadow: 0 10px 20px rgba(0,0,0,0.05); cursor: pointer; border: 2px solid transparent;
@@ -189,6 +192,57 @@ section#step-2-attractions {
 .package-card.silver { border-color: #C0C0C0; }
 .package-card.gold { border-color: #FFD700; }
 .package-card.platinum { border-color: #E5E4E2; }
+
+/* --- Guide Registration Form --- */
+
+.form-subtitle {
+    color: #555;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin: 10px 0 20px;
+}
+
+.guide-input-group {
+    margin-bottom: 15px;
+}
+
+.guide-input-group label {
+    display: block;
+    color: var(--navy);
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+}
+
+.guide-input-group input,
+.guide-input-group select,
+.guide-input-group textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    background: white;
+    color: var(--navy);
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.guide-input-group input:focus,
+.guide-input-group select:focus,
+.guide-input-group textarea:focus {
+    border-color: var(--navy);
+    box-shadow: 0 0 0 2px rgba(10, 41, 71, 0.1);
+}
+
+.guide-input-group textarea {
+    resize: vertical;
+}
+
+.guide-submit-btn {
+    width: 100%;
+    margin-top: 10px;
+}
 
 /* --- Advanced Footer Styling --- */
 .site-footer {
