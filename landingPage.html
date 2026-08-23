@@ -3,8 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Incredible India - Smart Tourism</title>
+    <title>Bharat-Darpan by team Cypher</title>
     <link rel="stylesheet" href="landing.css" />
+    <link rel="icon" type="image/png" href="logo.png">
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
@@ -14,9 +15,12 @@
   <body>
     <!-- Navigation -->
     <header class="navbar">
-      <div class="logo" onclick="resetApp()" style="font-style: italic">
-        experience <br />
-        incredible india
+      <div class="brand" onclick="resetApp()">
+        <img class="nav-logo" src="logo.png" alt="Bharat Darpan logo" />
+        <span class="logo" style="font-style: italic">
+          experience <br />
+          incredible india
+        </span>
       </div>
       <div class="nav-actions">
         <a href="login.html" class="btn-login">Login</a>
@@ -47,7 +51,7 @@
             <option value="chennai">Chennai</option>
             <option value="banglore">Banglore</option>
           </select>
-          <button onclick="selectCity()" class="btn-primary">
+          <button type="button" onclick="selectCity()" class="btn-primary">
             Explore City
           </button>
         </div>

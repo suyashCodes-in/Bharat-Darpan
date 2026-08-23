@@ -104,8 +104,8 @@ function selectCity() {
         grid.appendChild(card);
     });
 
-    hideAllSections();
     document.getElementById('step-2-attractions').classList.add('active');
+    document.getElementById('step-2-attractions').scrollIntoView({ behavior: 'smooth' });
 }
 
 // Step 2 to Step 3: Select Attraction
