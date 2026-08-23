@@ -138,3 +138,77 @@ function generateCode() {
     display.innerText = code;
     display.style.display = 'inline-block';
 }
+// Paste your valid Gemini API Key here
+const GEMINI_API_KEY = "MY-GEMINI-KEY"; 
+
+const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${GEMINI_API_KEY}`;
+
+function toggleChat() {
+  const chatContainer = document.getElementById("chat-container");
+  const isHidden = chatContainer.style.display === "none" || chatContainer.style.display === "";
+  chatContainer.style.display = isHidden ? "flex" : "none";
+}
+
+function handleKeyPress(event) {
+  if (event.key === "Enter") {
+    sendMessage();
+  }
+}
+
+async function sendMessage() {
+  const inputElement = document.getElementById("user-input");
+  const userText = inputElement.value.trim();
+
+  if (!userText) return;
+
+  appendMessage(userText, "user");
+  inputElement.value = "";
+
+  const thinkingMessage = appendMessage("Thinking...", "bot");
+
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        system_instruction: {
+          parts: [{ 
+            text: "You are 'Bharat Darpan Assistant', an expert AI travel guide for Indian tourism. Help users explore Indian cities, heritage sites, culture, food, travel options, and itineraries. Keep answers concise and helpful." 
+          }]
+        },
+        contents: [{
+          parts: [{ text: userText }]
+        }]
+      })
+    });
+
+    const data = await response.json();
+
+    if (data.error) {
+      console.error("Gemini API Error:", data.error);
+      thinkingMessage.textContent = `API Error: ${data.error.message || 'Invalid Request'}`;
+      return;
+    }
+
+    if (data.candidates && data.candidates[0].content.parts[0].text) {
+      thinkingMessage.textContent = data.candidates[0].content.parts[0].text;
+    } else {
+      thinkingMessage.textContent = "Sorry, I couldn't generate a response. Please try again.";
+    }
+
+  } catch (error) {
+    console.error("Fetch Error:", error);
+    thinkingMessage.textContent = "Network error. Please check your internet connection.";
+  }
+}
+
+function appendMessage(text, sender) {
+  const chatMessages = document.getElementById("chat-messages");
+  const msgDiv = document.createElement("div");
+  msgDiv.classList.add("message", sender);
+  msgDiv.textContent = text;
+  
+  chatMessages.appendChild(msgDiv);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+  return msgDiv;
+}
