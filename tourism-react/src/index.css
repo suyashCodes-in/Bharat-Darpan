@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────────────────
+   TAILWIND v4 — @theme block registers all custom design tokens.
+   These generate utility classes: bg-navy, text-cream, font-heading, etc.
+   IMPORTANT: Only declare --color-*, --font-*, etc. here. No layout rules.
+───────────────────────────────────────────────────────────────────────── */
+@theme {
+  --color-navy:        #0A2947;
+  --color-cream:       #F3E4C9;
+  --color-accent:      #D3D4C0;
+  --color-footer-dark: #05182A;
+
+  --font-heading: 'Playfair Display', serif;
+  --font-sans:    'Poppins', system-ui, sans-serif;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   KEYFRAMES  (declared outside @theme — these are NOT theme tokens)
+───────────────────────────────────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translate(-50%, calc(-50% + 16px)); }
+  to   { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   GLOBAL BASE  — only what Tailwind's preflight doesn't cover
+───────────────────────────────────────────────────────────────────────── */
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #F3E4C9;
+  color: #0A2947;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { font-family: 'Playfair Display', serif; }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   HERO  — background-image + overlay gradient can't be Tailwind utilities.
+   Layout (flex, centering, height) stays on the JSX element via Tailwind.
+   This class ONLY sets the background — nothing else.
+───────────────────────────────────────────────────────────────────────── */
+.hero-bg {
+  background-image:
+    linear-gradient(rgba(10, 41, 71, 0.7), rgba(10, 41, 71, 0.7)),
+    url('https://images.unsplash.com/photo-1548013146-72479768bada?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+  background-size: cover;
+  background-position: center;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   DESTINATION CARD  — position + overflow are required for the overlay clip.
+   Hover image scale and overlay slide are child-selector rules that can't
+   be expressed as Tailwind utilities, so they live here.
+─────────────────────────────────────────────────────────────────────────── */
+.dest-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  cursor: pointer;
+  height: 280px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.3s ease;
+}
+.dest-card:hover {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+.dest-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.dest-card:hover img {
+  transform: scale(1.05);
+}
+.card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 30px;
+  background: linear-gradient(transparent, rgba(10, 41, 71, 0.9));
+  color: #F3E4C9;
+  transform: translateY(20px);
+  transition: transform 0.4s ease;
+}
+.card-overlay h3 {
+  font-size: 1.8rem;
+  margin-bottom: 5px;
+}
+.card-overlay p {
+  font-size: 0.95rem;
+  opacity: 0.8;
+  color: #D3D4C0;
+}
+.dest-card:hover .card-overlay {
+  transform: translateY(0);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   SERVICE CARD  — base card styles + hover lift.
+   The hover uses a multi-property transition that is cleaner here than
+   splitting across Tailwind arbitrary values.
+─────────────────────────────────────────────────────────────────────────── */
+.service-card {
+  background-color: #ffffff;
+  border: 2px solid #D3D4C0;
+  border-radius: 12px;
+  padding: 40px 30px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+.service-card:hover {
+  border-color: #0A2947;
+  transform: translateY(-5px);
+  box-shadow: 0 8px 28px rgba(10, 41, 71, 0.15);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   HAMBURGER BUTTON  — hidden on desktop, visible on mobile via media query.
+   The button uses display:flex for centering the bar spans.
+─────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  .hamburger-btn {
+    display: flex !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   AUTH LAYOUT  — hide the left illustration panel on small screens
+─────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .auth-left-panel {
+    display: none;
+  }
+}
