@@ -428,6 +428,23 @@
         </div>
       </div>
     </footer>
+                <!-- Chatbot Trigger Button -->
+      <button id="chat-toggle-btn" onclick="toggleChat()">💬 Bharat Darpan Assistant</button>
+
+      <!-- Chatbot Interface -->
+      <div id="chat-container">
+        <div class="chat-header">
+          <h3>🇮🇳 Bharat Darpan Assistant</h3>
+          <button onclick="toggleChat()" class="close-btn">&times;</button>
+        </div>
+        <div id="chat-messages">
+          <div class="message bot">Namaste! Welcome to Bharat Darpan. How can I help you explore India today?</div>
+        </div>
+        <div class="chat-input-area">
+          <input type="text" id="user-input" placeholder="Ask about places, heritage, travel..." onkeypress="handleKeyPress(event)">
+          <button id="send-btn" onclick="sendMessage()">Send</button>
+        </div>
+      </div>
 
     <script src="jsLand.js"></script>
   </body>
